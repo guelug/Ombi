@@ -12,6 +12,7 @@
         }
     },
     "Common": {
+        "IHaveThis": "Tengi",
         "ContinueButton": "Continuar",
         "Available": "Disponible",
         "Available4K": "Disponible 4K",
@@ -149,6 +150,7 @@
         "KeywordSearchingDisclaimer": "Por favor, ten en cuenta que la búsqueda de palabras clave es poco confiable debido a la inconsistencia en la base de datos de TheMovieDb"
     },
     "Requests": {
+        "ProvidedBy": "Pedirlo a "
         "Title": "Solicitudes",
         "Paragraph": "A continuación puedes ver tanto las tuyas como las demás solicitudes, así como su estado de descarga y aprobación.",
         "MoviesTab": "Películas",
