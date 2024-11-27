@@ -1,3 +1,11 @@
+# Node build stage for Angular
+FROM node:18 AS node-build
+WORKDIR /src
+COPY ["Ombi/ClientApp/", "Ombi/ClientApp/"]
+WORKDIR /src/Ombi/ClientApp
+RUN npm install
+RUN npm run build
+
 # build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
 ARG VERSION=1.0.0
@@ -57,9 +65,7 @@ WORKDIR /source/Ombi
 COPY ["Ombi/", "."]
 RUN dotnet build "Ombi.csproj" -c release
 
-
 FROM build AS publish
-
 RUN dotnet publish "Ombi.csproj" -c release --no-restore --no-build -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy as base
@@ -69,7 +75,5 @@ EXPOSE 5000
 FROM base AS final
 WORKDIR /src/Ombi
 COPY --from=publish /app/publish .
-COPY ["Ombi/ClientApp/dist", "/src/Ombi/ClientApp/dist/"]
+COPY --from=node-build /src/Ombi/ClientApp/dist /src/Ombi/ClientApp/dist/
 ENTRYPOINT ["dotnet", "Ombi.dll"]
-
-
