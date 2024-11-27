@@ -150,6 +150,7 @@
         "KeywordSearchingDisclaimer": "Please note that Keyword Searching is very hit and miss due to the inconsistent data in TheMovieDb"
     },
     "Requests": {
+        "ProvidedBy": "Provided by",
         "Title": "Requests",
         "Paragraph": "Below you can see yours and all other requests, as well as their download and approval status.",
         "MoviesTab": "Movies",
