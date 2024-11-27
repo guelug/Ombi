@@ -45,6 +45,10 @@ export class RequestService extends ServiceHelpers {
         return this.http.post<IRequestEngineResult>(`${this.url}Movie/Approve`, JSON.stringify(movie),  {headers: this.headers});
     }
 
+    public provideMovie(requestId: number): Observable<IRequestEngineResult> {
+        return this.http.post<IRequestEngineResult>(`${this.url}movie/provide/${requestId}`, {},  {headers: this.headers});
+    }
+
     public denyMovie(movie: IDenyMovieModel): Observable<IRequestEngineResult> {
         return this.http.put<IRequestEngineResult>(`${this.url}Movie/Deny`, JSON.stringify(movie),  {headers: this.headers});
     }
@@ -184,6 +188,7 @@ export class RequestService extends ServiceHelpers {
     public searchAlbumRequests(search: string): Observable<IAlbumRequest[]> {
         return this.http.get<IAlbumRequest[]>(`${this.url}music/search/${search}`, {headers: this.headers});
     }
+  
 
     public removeAlbumRequest(request: number): Observable<IRequestEngineResult> {
         return this.http.delete<IRequestEngineResult>(`${this.url}music/${request}`, {headers: this.headers});
