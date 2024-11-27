@@ -101,6 +101,9 @@ export class MoviesGridComponent implements OnInit, AfterViewInit {
           this.displayedColumns.push('watchedByRequestedUser');
       }
 
+      // Add providedBy column before actions
+      this.displayedColumns.push('providedBy');
+
       // always put the actions column at the end
       this.displayedColumns.push('actions');
     }
