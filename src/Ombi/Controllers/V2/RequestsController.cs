@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ombi.Helpers;  // This should contain the GetUserId extension
 using System.Threading.Tasks;
-
+using System.Security.Claims;
 using Ombi.Core.Engine;
 using Ombi.Core.Engine.Interfaces;
 using Ombi.Core.Models.Requests;
