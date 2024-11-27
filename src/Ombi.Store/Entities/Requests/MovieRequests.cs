@@ -64,6 +64,11 @@ namespace Ombi.Store.Entities.Requests
         /// Only Use for setting the Language Code, Use the LanguageCode property for reading
         /// </summary>
         public string LangCode { get; set; }
+        // New properties for the "I Have This Movie" feature
+        public int? ProvidedByUserId { get; set; }
+        public string ProvidedByUserName { get; set; }
+        public DateTime? ProvidedDate { get; set; }
+        public bool IsProvidedByUser { get; set; }
 
         [NotMapped]
         [JsonIgnore]
