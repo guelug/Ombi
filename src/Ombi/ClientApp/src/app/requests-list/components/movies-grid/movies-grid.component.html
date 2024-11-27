@@ -159,6 +159,28 @@
 			</td>
 		</ng-container>
 
+    <ng-container matColumnDef="providedBy">
+    <th mat-header-cell *matHeaderCellDef>{{ 'Requests.ProvidedBy' | translate }}</th>
+    <td mat-cell *matCellDef="let element">
+        <!-- Show provide button if not provided -->
+        <button 
+            *ngIf="!element.isProvidedByUser && !element.available && !element.denied"
+            mat-raised-button 
+            color="accent"
+            (click)="provideMovie(element)"
+            id="provideButton{{element.id}}">
+            <i class="fas fa-check"></i> {{ 'Common.IHaveThis' | translate }}
+        </button>
+            <!-- Show provider info if provided -->
+            <span *ngIf="element.isProvidedByUser" class="provider-info">
+                {{ element.providedByUserName }}
+                <br/>
+                <small>{{ element.providedDate | ombiDate: 'PP' }}</small>
+            </span>
+        </td>
+    </ng-container>
+
+
 		<ng-container matColumnDef="actions">
 			<th mat-header-cell *matHeaderCellDef></th>
 			<td mat-cell *matCellDef="let element">
