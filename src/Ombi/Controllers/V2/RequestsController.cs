@@ -257,17 +257,26 @@ namespace Ombi.Controllers.V2
                     });
                 }
 
-                // Get current user info
+                // Get current user info using Claims
                 var username = User.Identity.Name;
-                var userId = int.Parse(User.Identity.GetUserId()); // Changed this line
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null)
+                {
+                    return BadRequest(new RequestEngineResult
+                    {
+                        Result = false,
+                        Message = "Could not identify user"
+                    });
+                }
+                var userId = int.Parse(userIdClaim.Value);
 
                 request.ProvidedByUserId = userId;
                 request.ProvidedByUserName = username;
                 request.ProvidedDate = DateTime.UtcNow;
                 request.IsProvidedByUser = true;
 
-                // Changed this line to use Update instead of UpdateRequest
-                await _movieRequestEngine.Update(request);
+                // Use SaveRequest instead of Update
+                await _movieRequestEngine.SaveRequest(request);
                 
                 return Ok(new RequestEngineResult
                 {
@@ -284,6 +293,7 @@ namespace Ombi.Controllers.V2
                 });
             }
         }
+
 
         private string GetApiAlias()
         {
