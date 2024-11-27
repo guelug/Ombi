@@ -178,3 +178,36 @@
       .right-buttons {
           float:right;
       }
+  // Provider Movie Button and Info Styles
+  .provider-status {
+      margin-top: 1rem;
+  
+      .btn-success-outline {
+          background-color: transparent;
+          border-color: $ombi-active;
+          color: $ombi-active;
+  
+          &:hover {
+              background-color: $ombi-active;
+              color: $ombi-active-text;
+          }
+  
+          i {
+              margin-right: 0.5rem;
+          }
+      }
+  
+      .label.label-success {
+          background-color: $ombi-active;
+          color: $ombi-active-text;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          display: inline-block;
+  
+          small {
+              opacity: 0.8;
+              display: block;
+              margin-top: 0.3rem;
+          }
+      }
+  }
