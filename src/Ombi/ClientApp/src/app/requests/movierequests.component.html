@@ -85,6 +85,27 @@
 							[translate]="'Common.PendingApproval'"
 						></span>
 					</div>
+          <div class="provider-status">
+              <!-- Show the button only if no one has provided the movie yet -->
+              <div *ngIf="!request.isProvidedByUser && !request.available && !request.denied">
+                  <button 
+                      (click)="provideMovie(request)" 
+                      class="btn btn-sm btn-success-outline"
+                      id="provideMovieBtn">
+                      <i class="fas fa-check"></i> {{ 'Common.IHaveThis' | translate }}
+                  </button>
+              </div>
+              
+              <!-- Show who provided the movie -->
+              <div *ngIf="request.isProvidedByUser" class="provided-info">
+                  <span class="label label-success">
+                      {{ 'Requests.ProvidedBy' | translate }} {{ request.providedByUserName }}
+                      <br/>
+                      <small>{{ request.providedDate | ombiDate: 'PP' }}</small>
+                  </span>
+              </div>
+          </div>
+
 					<div *ngIf="request.denied" id="requestDenied">
 						{{ 'Requests.Denied' | translate }}
 						<i style="color: red" class="fas fa-check" pTooltip="{{ request.deniedReason }}"></i>
