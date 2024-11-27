@@ -108,6 +108,16 @@ export class MoviesGridComponent implements OnInit, AfterViewInit {
       this.displayedColumns.push('actions');
     }
 
+      // Add the method to handle the button click
+    public provideMovie(request: IMovieRequests) {
+        this.requestService.provideMovie(request.id).subscribe(result => {
+            if (result.result) {
+                request.providedByUserName = this.auth.claims().name;
+                this.ref.detectChanges();
+            }
+        });
+    }
+
     public async ngAfterViewInit() {
 
         this.setDisplayedColumns();
