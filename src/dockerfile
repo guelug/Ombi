@@ -3,7 +3,7 @@ FROM node:18 AS node-build
 WORKDIR /src
 COPY ["Ombi/ClientApp/", "Ombi/ClientApp/"]
 WORKDIR /src/Ombi/ClientApp
-RUN npm install
+RUN npm install --legacy-peer-deps
 RUN npm run build
 
 # build stage
