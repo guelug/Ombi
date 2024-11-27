@@ -89,20 +89,17 @@
               <!-- Show the button only if no one has provided the movie yet -->
               <div *ngIf="!request.isProvidedByUser && !request.available && !request.denied">
                   <button 
+                      mat-raised-button
+                      color="accent"
                       (click)="provideMovie(request)" 
-                      class="btn btn-sm btn-success-outline"
                       id="provideMovieBtn">
                       <i class="fas fa-check"></i> {{ 'Common.IHaveThis' | translate }}
                   </button>
               </div>
-              
               <!-- Show who provided the movie -->
-              <div *ngIf="request.isProvidedByUser" class="provided-info">
-                  <span class="label label-success">
-                      {{ 'Requests.ProvidedBy' | translate }} {{ request.providedByUserName }}
-                      <br/>
-                      <small>{{ request.providedDate | ombiDate: 'PP' }}</small>
-                  </span>
+             <div *ngIf="request.isProvidedByUser" class="label label-success">
+                  <span>{{ 'Requests.ProvidedBy' | translate }} {{ request.providedByUserName }}</span>
+                  <small>{{ request.providedDate | ombiDate: 'PP' }}</small>
               </div>
           </div>
 
