@@ -250,6 +250,26 @@ export class MoviesGridComponent implements OnInit, AfterViewInit {
 
     public bulkDeny4K = () => this.bulkDenyInternal(true);
 
+    public provideMovie(request: IMovieRequests) {
+      this.requestService.provideMovie(request.id).subscribe(result => {
+          if (result.result) {
+              request.isProvidedByUser = true;
+              request.providedByUserId = this.auth.claims().nameid;
+              request.providedByUserName = this.auth.claims().name;
+              request.providedDate = new Date();
+              
+              this.notification.success(
+                  this.translateService.instant('Requests.MovieProvided')
+              );
+              this.ref.detectChanges();
+          } else {
+              this.notification.error(
+                  result.message || result.errorMessage
+              );
+          }
+      });
+  }
+  
     private bulkDenyInternal(is4k: boolean) {
         if (this.selection.isEmpty()) {
             return;
