@@ -30,6 +30,12 @@ export interface IMovieRequests extends IFullBaseRequest {
   // For the UI
   rootPathOverrideTitle: string;
   qualityOverrideTitle: string;
+
+  // New properties for the "I Have This Movie" feature
+  providedByUserId?: number;
+  providedByUserName?: string;
+  providedDate?: Date;
+  isProvidedByUser?: boolean;
 }
 
 export enum RequestCombination {
