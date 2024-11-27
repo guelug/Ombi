@@ -233,7 +233,7 @@ namespace Ombi.Controllers.V2
             return _recentlyRequestedService.GetRecentlyRequested(CancellationToken);
         }
 
-        [HttpPost("movie/provide/{requestId}")]
+       [HttpPost("movie/provide/{requestId}")]
         public async Task<ActionResult<RequestEngineResult>> ProvideMovie(int requestId)
         {
             try
@@ -247,7 +247,7 @@ namespace Ombi.Controllers.V2
                         Message = "Request not found"
                     });
                 }
-        
+
                 if (request.ProvidedByUserId.HasValue)
                 {
                     return BadRequest(new RequestEngineResult
@@ -256,17 +256,18 @@ namespace Ombi.Controllers.V2
                         Message = "Movie already provided by another user"
                     });
                 }
-        
+
                 // Get current user info
                 var username = User.Identity.Name;
-                var userId = User.GetUserId();
-        
+                var userId = int.Parse(User.Identity.GetUserId()); // Changed this line
+
                 request.ProvidedByUserId = userId;
                 request.ProvidedByUserName = username;
                 request.ProvidedDate = DateTime.UtcNow;
                 request.IsProvidedByUser = true;
-        
-                var result = await _movieRequestEngine.UpdateRequest(request);
+
+                // Changed this line to use Update instead of UpdateRequest
+                await _movieRequestEngine.Update(request);
                 
                 return Ok(new RequestEngineResult
                 {
@@ -283,6 +284,7 @@ namespace Ombi.Controllers.V2
                 });
             }
         }
+
         private string GetApiAlias()
         {
             // Make sure this only applies when using the API KEY
