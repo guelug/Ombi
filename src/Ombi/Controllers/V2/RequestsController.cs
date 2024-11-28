@@ -247,7 +247,7 @@ namespace Ombi.Controllers.V2
                         Message = "Request not found"
                     });
                 }
-
+        
                 if (request.ProvidedByUserId.HasValue)
                 {
                     return BadRequest(new RequestEngineResult
@@ -256,8 +256,7 @@ namespace Ombi.Controllers.V2
                         Message = "Movie already provided by another user"
                     });
                 }
-
-                // Get current user info using Claims
+        
                 var username = User.Identity.Name;
                 var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (userIdClaim == null)
@@ -269,15 +268,14 @@ namespace Ombi.Controllers.V2
                     });
                 }
                 var userId = int.Parse(userIdClaim.Value);
-
+        
                 request.ProvidedByUserId = userId;
                 request.ProvidedByUserName = username;
                 request.ProvidedDate = DateTime.UtcNow;
                 request.IsProvidedByUser = true;
-
-                // Use SaveRequest instead of Update
-                await _movieRequestEngine.SaveRequest(request);
-                
+        
+                await _movieRequestEngine.UpdateMovieRequest(request);
+        
                 return Ok(new RequestEngineResult
                 {
                     Result = true
