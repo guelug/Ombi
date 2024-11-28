@@ -227,10 +227,11 @@ namespace Ombi.Controllers.V1
                 {
                     Result = true
                 });
+                 Log.LogError(ex, "Error while providing movie for request {0}", requestId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while providing movie for request {0}", requestId);
+                
                 return BadRequest(new RequestEngineResult
                 {
                     Result = false,
