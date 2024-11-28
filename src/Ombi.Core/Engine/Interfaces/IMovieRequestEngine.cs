@@ -27,5 +27,6 @@ namespace Ombi.Core.Engine.Interfaces
             string sortOrder);
         Task<RequestsViewModel<MovieRequests>> GetRequestsByStatus(int count, int position, string sortProperty, string sortOrder, RequestStatus status);
         Task<RequestEngineResult> UpdateAdvancedOptions(MediaAdvancedOptions options);
+        Task SaveRequest(MovieRequests request);
     }
 }
