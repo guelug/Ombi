@@ -56,6 +56,13 @@ namespace Ombi.Core.Engine
         private readonly IFeatureService _featureService;
         protected readonly IUserPlayedMovieRepository _userPlayedMovieRepository;
 
+
+         public async Task SaveRequest(MovieRequests request)
+        {
+            await MovieRepository.Update(request);
+            await _mediaCacheService.Purge();
+        }
+
         /// <summary>
         /// Requests the movie.
         /// </summary>
