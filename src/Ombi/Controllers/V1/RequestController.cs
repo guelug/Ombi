@@ -180,6 +180,65 @@ namespace Ombi.Controllers.V1
             return await MovieRequestEngine.MarkAvailable(model.Id, model.Is4K);
         }
 
+        [HttpPost("movie/provide/{requestId}")]
+        public async Task<ActionResult<RequestEngineResult>> ProvideMovie(int requestId)
+        {
+            try
+            {
+                var request = await _movieRequestEngine.GetRequest(requestId);
+                if (request == null)
+                {
+                    return NotFound(new RequestEngineResult
+                    {
+                        Result = false,
+                        Message = "Request not found"
+                    });
+                }
+        
+                if (request.ProvidedByUserId.HasValue)
+                {
+                    return BadRequest(new RequestEngineResult
+                    {
+                        Result = false,
+                        Message = "Movie already provided by another user"
+                    });
+                }
+        
+                var username = User.Identity.Name;
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null)
+                {
+                    return BadRequest(new RequestEngineResult
+                    {
+                        Result = false,
+                        Message = "Could not identify user"
+                    });
+                }
+                var userId = int.Parse(userIdClaim.Value);
+        
+                request.ProvidedByUserId = userId;
+                request.ProvidedByUserName = username;
+                request.ProvidedDate = DateTime.UtcNow;
+                request.IsProvidedByUser = true;
+        
+                await _movieRequestEngine.UpdateMovieRequest(request);
+        
+                return Ok(new RequestEngineResult
+                {
+                    Result = true
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while providing movie for request {0}", requestId);
+                return BadRequest(new RequestEngineResult
+                {
+                    Result = false,
+                    Message = "Error processing request"
+                });
+            }
+        }
+
         /// <summary>
         /// Set's the specified Movie as unavailable 
         /// </summary>
