@@ -132,7 +132,6 @@ export function JwtTokenGetter() {
         FormsModule,
         DataViewModule,
         MatSnackBarModule,
-        MatSnackBarModule,
         DialogModule,
         MatButtonModule,
         MatCardModule,
