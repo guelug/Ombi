@@ -15,6 +15,8 @@ using Ombi.Core.Services;
 using Ombi.Models;
 using Ombi.Store.Entities;
 using Ombi.Store.Entities.Requests;
+using System.Security.Claims;
+
 
 namespace Ombi.Controllers.V1
 {
@@ -185,7 +187,7 @@ namespace Ombi.Controllers.V1
         {
             try
             {
-                var request = await _movieRequestEngine.GetRequest(requestId);
+                var request = await MovieRequestEngine.GetRequest(requestId);
                 if (request == null)
                 {
                     return NotFound(new RequestEngineResult
@@ -221,16 +223,17 @@ namespace Ombi.Controllers.V1
                 request.ProvidedDate = DateTime.UtcNow;
                 request.IsProvidedByUser = true;
         
-                await _movieRequestEngine.UpdateMovieRequest(request);
+                await MovieRequestEngine.UpdateMovieRequest(request);
         
                 return Ok(new RequestEngineResult
                 {
                     Result = true
                 });
-                 Log.LogError(ex, "Error while providing movie for request {0}", requestId);
+                
             }
             catch (Exception ex)
             {
+                Log.LogError(ex, "Error while providing movie for request {0}", requestId);
                 
                 return BadRequest(new RequestEngineResult
                 {
