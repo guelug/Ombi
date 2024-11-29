@@ -152,6 +152,7 @@ export function JwtTokenGetter() {
         MatCheckboxModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        ..OmbiCommonModules,
         JwtModule.forRoot({
             config: {
                 tokenGetter: JwtTokenGetter,
